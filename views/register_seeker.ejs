@@ -1,0 +1,74 @@
+<%- include("partials/header") %>
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <h2>Register as an Accommodation Seeker</h2>
+            <p>Fill out the form below to find your perfect room.</p>
+            <hr>
+            <form action="/register/seeker" method="POST">
+                <div class="mb-3">
+                    <label for="name" class="form-label">Full Name</label>
+                    <input type="text" class="form-control" id="name" name="name" required>
+                </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email address</label>
+                    <input type="email" class="form-control" id="email" name="email" required>
+                </div>
+                <div class="mb-3">
+                    <label for="phone" class="form-label">Phone Number</label>
+                    <input type="tel" class="form-control" id="phone" name="phone">
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" class="form-control" id="password" name="password" required>
+                </div>
+                <hr>
+                <h5>Your Requirements</h5>
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label for="budget_min" class="form-label">Minimum Budget (Monthly Rent)</label>
+                        <input type="number" class="form-control" id="budget_min" name="budget_min">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="budget_max" class="form-label">Maximum Budget (Monthly Rent)</label>
+                        <input type="number" class="form-control" id="budget_max" name="budget_max">
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="preferred_locations" class="form-label">Preferred Locations (comma-separated)</label>
+                    <input type="text" class="form-control" id="preferred_locations" name="preferred_locations">
+                    <div class="form-text">E.g., Koramangala, HSR Layout, Indiranagar</div>
+                </div>
+                <div class="mb-3">
+                    <label for="room_type_preference" class="form-label">Preferred Room Type</label>
+                    <select class="form-select" id="room_type_preference" name="room_type_preference">
+                        <option selected>Any</option>
+                        <option value="Single Sharing">Single Sharing</option>
+                        <option value="Double Sharing">Double Sharing</option>
+                        <option value="Triple Sharing">Triple Sharing</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="required_facilities" class="form-label">Required Facilities (comma-separated)</label>
+                    <input type="text" class="form-control" id="required_facilities" name="required_facilities">
+                    <div class="form-text">E.g., Wi-Fi, AC, Food, Parking, Laundry</div>
+                </div>
+                <div class="mb-3">
+                    <label for="move_in_date" class="form-label">Expected Move-in Date</label>
+                    <input type="date" class="form-control" id="move_in_date" name="move_in_date">
+                </div>
+                <div class="mb-3">
+                    <label for="additional_notes" class="form-label">Additional Notes</label>
+                    <textarea class="form-control" id="additional_notes" name="additional_notes" rows="3"></textarea>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Register as Seeker</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<%- include("partials/footer") %>
+

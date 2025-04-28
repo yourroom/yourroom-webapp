@@ -1,0 +1,34 @@
+services:
+  - type: web
+    name: yourroom-webapp
+    env: node
+    buildCommand: npm install
+    startCommand: node server.js
+    envVars:
+      - key: PORT
+        value: 10000
+      - key: DB_HOST
+        fromDatabase:
+          name: yourroom-db
+          property: host
+      - key: DB_NAME
+        fromDatabase:
+          name: yourroom-db
+          property: database
+      - key: DB_USER
+        fromDatabase:
+          name: yourroom-db
+          property: user
+      - key: DB_PASSWORD
+        fromDatabase:
+          name: yourroom-db
+          property: password
+      - key: DB_PORT
+        fromDatabase:
+          name: yourroom-db
+          property: port
+
+databases:
+  - name: yourroom-db
+    plan: free
+    postgresMajorVersion: 14

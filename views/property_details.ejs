@@ -1,0 +1,94 @@
+<%- include("partials/header") %>
+
+<div class="container mt-5">
+    <% if (property) { %>
+        <div class="row">
+            <div class="col-md-8">
+                <h1 class="mb-3"><%= property.property_name %></h1>
+                <p class="lead text-muted"><%= property.address_line1 %>, <%= property.city %>, <%= property.state %> <%= property.pincode %></p>
+                
+                <!-- Image Carousel (if images exist) -->
+                <% if (property.images && property.images.length > 0) { %>
+                    <div id="propertyCarousel" class="carousel slide mb-4" data-bs-ride="carousel">
+                        <div class="carousel-inner">
+                            <% property.images.forEach((image, index) => { %>
+                                <div class="carousel-item <%= index === 0 ? "active" : "" %>">
+                                    <img src="<%= image.image_url %>" class="d-block w-100" alt="Property Image <%= index + 1 %>" style="max-height: 400px; object-fit: cover;">
+                                </div>
+                            <% }); %>
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#propertyCarousel" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#propertyCarousel" data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </button>
+                    </div>
+                <% } else { %>
+                    <p class="text-muted">No images available for this property.</p>
+                <% } %>
+                
+                <h4 class="mt-4">Description</h4>
+                <p><%= property.description || "No description provided." %></p>
+                
+                <h4 class="mt-4">Rooms Available</h4>
+                <% if (property.rooms && property.rooms.length > 0) { %>
+                    <ul class="list-group">
+                        <% property.rooms.forEach(room => { %>
+                            <li class="list-group-item">
+                                <h5><%= room.room_type %></h5>
+                                <p>
+                                    <strong>Rent:</strong> ₹<%= room.rent_amount %> / month<br>
+                                    <% if (room.security_deposit) { %>
+                                        <strong>Deposit:</strong> ₹<%= room.security_deposit %><br>
+                                    <% } %>
+                                    <strong>Status:</strong> <%= room.is_available ? "Available" : "Occupied" %>
+                                    <% if (room.available_from) { %>
+                                        (from <%= new Date(room.available_from).toLocaleDateString() %>)
+                                    <% } %><br>
+                                    <% if (room.facilities && room.facilities.length > 0) { %>
+                                        <strong>Facilities:</strong> <%= room.facilities.join(", ") %><br>
+                                    <% } %>
+                                    <% if (room.description) { %>
+                                        <strong>Notes:</strong> <%= room.description %><br>
+                                    <% } %>
+                                </p>
+                            </li>
+                        <% }); %>
+                    </ul>
+                <% } else { %>
+                    <p>No specific room details available.</p>
+                <% } %>
+            </div>
+            
+            <!-- Owner Information -->
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>Owner Information</h5>
+                    </div>
+                    <div class="card-body">
+                        <p>
+                            <strong>Name:</strong> <%= property.owner_name %><br>
+                            <% if (property.owner_email) { %>
+                                <strong>Email:</strong> <a href="mailto:<%= property.owner_email %>"><%= property.owner_email %></a><br>
+                            <% } %>
+                            <% if (property.owner_phone) { %>
+                                <strong>Phone:</strong> <a href="tel:<%= property.owner_phone %>"><%= property.owner_phone %></a><br>
+                            <% } %>
+                        </p>
+                        <button class="btn btn-primary w-100">Contact Owner</button> <!-- Add functionality later -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    <% } else { %>
+        <div class="alert alert-danger">
+            Property details could not be loaded.
+        </div>
+    <% } %>
+</div>
+
+<%- include("partials/footer") %>
