@@ -1,0 +1,85 @@
+<%- include("partials/header") %>
+
+<div class="container mt-4">
+    <div class="row">
+        <!-- Search Filters -->
+        <div class="col-md-3">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="mb-0">Search Filters</h5>
+                </div>
+                <div class="card-body">
+                    <form action="/search" method="GET">
+                        <div class="mb-3">
+                            <label for="city" class="form-label">City</label>
+                            <input type="text" class="form-control" id="city" name="city" value="<%= filters.city || '' %>">
+                        </div>
+                        <div class="mb-3">
+                            <label for="minBudget" class="form-label">Min Budget</label>
+                            <input type="number" class="form-control" id="minBudget" name="minBudget" value="<%= filters.minBudget || '' %>">
+                        </div>
+                        <div class="mb-3">
+                            <label for="maxBudget" class="form-label">Max Budget</label>
+                            <input type="number" class="form-control" id="maxBudget" name="maxBudget" value="<%= filters.maxBudget || '' %>">
+                        </div>
+                        <div class="mb-3">
+                            <label for="roomType" class="form-label">Room Type</label>
+                            <select class="form-select" id="roomType" name="roomType">
+                                <option value="">Any</option>
+                                <option value="Single Sharing" <%= filters.roomType === 'Single Sharing' ? 'selected' : '' %>>Single Sharing</option>
+                                <option value="Double Sharing" <%= filters.roomType === 'Double Sharing' ? 'selected' : '' %>>Double Sharing</option>
+                                <option value="Triple Sharing" <%= filters.roomType === 'Triple Sharing' ? 'selected' : '' %>>Triple Sharing</option>
+                                <option value="Other" <%= filters.roomType === 'Other' ? 'selected' : '' %>>Other</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="facilities" class="form-label">Facilities</label>
+                            <input type="text" class="form-control" id="facilities" name="facilities" value="<%= filters.facilities || '' %>" placeholder="e.g., WiFi, AC, Food">
+                            <div class="form-text">Comma-separated list</div>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Apply Filters</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Search Results -->
+        <div class="col-md-9">
+            <h2>Search Results</h2>
+            <p><%= properties.length %> properties found</p>
+            
+            <% if (properties.length === 0) { %>
+                <div class="alert alert-info">
+                    No properties found matching your criteria. Try adjusting your filters.
+                </div>
+            <% } else { %>
+                <div class="row">
+                    <% properties.forEach(property => { %>
+                        <div class="col-md-6 mb-4">
+                            <div class="card h-100">
+                                <div class="card-body">
+                                    <h5 class="card-title"><%= property.property_name %></h5>
+                                    <h6 class="card-subtitle mb-2 text-muted"><%= property.city %>, <%= property.state %></h6>
+                                    <p class="card-text">
+                                        <strong>Type:</strong> <%= property.property_type %><br>
+                                        <strong>Owner:</strong> <%= property.owner_name %><br>
+                                        <% if (property.description && property.description.length > 100) { %>
+                                            <%= property.description.substring(0, 100) %>...
+                                        <% } else { %>
+                                            <%= property.description || 'No description available' %>
+                                        <% } %>
+                                    </p>
+                                </div>
+                                <div class="card-footer">
+                                    <a href="/property/<%= property.property_id %>" class="btn btn-primary">View Details</a>
+                                </div>
+                            </div>
+                        </div>
+                    <% }); %>
+                </div>
+            <% } %>
+        </div>
+    </div>
+</div>
+
+<%- include("partials/footer") %>
